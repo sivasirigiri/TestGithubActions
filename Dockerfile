@@ -12,4 +12,4 @@ ARG GITHUB_WORKSPACE
 # Set an environment variable within the container (optional, but often useful)
 ENV GITHUB_WORKSPACE=$GITHUB_WKSPC
 
-COPY $GITHUB_WORKSPACE\bin\app.publish .
+COPY ./bin/app.publish .
