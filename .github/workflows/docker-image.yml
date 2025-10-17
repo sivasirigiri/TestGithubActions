@@ -55,3 +55,4 @@ jobs:
         file: ${{ github.workspace }}/Dockerfile # Path to your Dockerfile
         push: true # Set to true to push to a registry
         tags: ${{ secrets.DOCKER_USERNAME }}/testgithubactions:latest
+        platform: windows/amd64
