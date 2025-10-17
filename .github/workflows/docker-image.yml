@@ -10,9 +10,19 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
+    - name: Setup MSBuild
+      # This action adds MSBuild.exe to the PATH environment variable
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Restore NuGet packages
+      run: nuget restore TestGitHubActions.sln
+
+    - name: Build solution
+      # Use msbuild.exe to build the solution in Release configuration
+      run: |
+        msbuild.exe TestGitHubActions.sln /p:Configuration=Release
