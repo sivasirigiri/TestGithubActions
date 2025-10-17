@@ -64,5 +64,5 @@ jobs:
 
       run: |
         Write-Host "Registry user name: $($env:REG_USER_NAME)"
-        docker build -t testgithubactions:latest -f ${{ github.workspace }}/Dockerfile .
+        docker build --build-arg GITHUB_WKSPC=${{ github.workspace }} -t testgithubactions:latest -f ${{ github.workspace }}/Dockerfile .
         docker push testgithubactions:latest
