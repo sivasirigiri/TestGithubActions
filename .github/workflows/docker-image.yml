@@ -63,6 +63,6 @@ jobs:
         REG_USER_NAME: ${{ secrets.DOCKERHUB_USERNAME }} # Assign the secret to an environment variable
 
       run: |
-        Write-Host "Registry user name: $env:REG_USER_NAME"
-        docker build . -t "$env.REG_USER_NAME" + "/" + "testgithubactions:latest" -f ${{ github.workspace }}/Dockerfile .
-        docker push "$env.REG_USER_NAME" + "/" + "testgithubactions:latest"
+        Write-Host "Registry user name: $($env:REG_USER_NAME)"
+        docker build . -t testgithubactions:latest -f ${{ github.workspace }}/Dockerfile .
+        docker push testgithubactions:latest
