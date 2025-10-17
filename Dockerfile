@@ -1,7 +1,15 @@
 # Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 # For more information, please see https://aka.ms/containercompat
 
+
 FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2022
 ARG source
 WORKDIR /inetpub/wwwroot
-COPY ${{ github.workspace }}\bin\app.publish .
+
+# Use ARG to define a build argument
+ARG GITHUB_WORKSPACE
+
+# Set an environment variable within the container (optional, but often useful)
+ENV GITHUB_WORKSPACE=$GITHUB_WKSPC
+
+COPY $GITHUB_WORKSPACE\bin\app.publish .
