@@ -60,8 +60,8 @@ jobs:
     - name: Build and Push
       shell: powershell
       env:
-        DOCKER_HUB_USER_NAME: ${{ secrets.DOCKERHUB_USERNAME }} # Assign the secret to an environment variable
+        REG_USER_NAME: ${{ secrets.DOCKERHUB_USERNAME }} # Assign the secret to an environment variable
 
       run: |
-        docker build . -t ${{ env.DOCKERHUB_USERNAME }}/testgithubactions:latest -f ${{ github.workspace }}/Dockerfile .
-        docker push ${{ env.DOCKERHUB_USERNAME }}/testgithubactions:latest
+        docker build . -t ${{ env.REG_USER_NAME }}/testgithubactions:latest -f ${{ github.workspace }}/Dockerfile .
+        docker push ${{ env.REG_USER_NAME }}/testgithubactions:latest
