@@ -26,3 +26,9 @@ jobs:
       # Use msbuild.exe to build the solution in Release configuration
       run: |
         msbuild.exe TestGitHubActions.sln /p:Configuration=Release
+    - name: Publish web application
+      run: |
+        msbuild.exe TestGitHubActions.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile="FolderProfile"
+      env:
+        # Example using a GitHub Secret for a sensitive variable
+        FolderProfile: ${{ secrets.PUBLISH_PROFILE_XML }}
