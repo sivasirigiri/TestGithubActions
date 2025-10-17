@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: windows-2022
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
         file: ${{ github.workspace }}/Dockerfile # Path to your Dockerfile
         push: true # Set to true to push to a registry
         tags: ${{ secrets.DOCKER_USERNAME }}/testgithubactions:latest
-        platform: windows/amd64
+        platforms: windows/amd64
 
         # - name: Build and Push
     #   shell: powershell
