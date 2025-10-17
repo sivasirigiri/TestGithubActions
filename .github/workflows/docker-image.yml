@@ -32,3 +32,9 @@ jobs:
       env:
         # Example using a GitHub Secret for a sensitive variable
         FolderProfile: ${{ secrets.PUBLISH_PROFILE_XML }}
+
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: web-app-release
+        path: bin\app.publish\
