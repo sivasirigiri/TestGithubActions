@@ -85,7 +85,7 @@ jobs:
          REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
          MY_USERNAME: ${{ github.actor }}
          MY_PASSWORD: ${{ secrets.REGISTY_PAT }}
-         REP_NAME: ${GITHUB_REPOSITORY#*/}
+         REP_NAME: ${{GITHUB_REPOSITORY#*/}}
       run: |
            $username = $env:MY_USERNAME
            $password = $env:MY_PASSWORD
