@@ -41,23 +41,34 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-      with:
-        platforms: windows/amd64
+      #with:
+        #platforms: windows/amd64
 
     - name: Log in to Docker Hub (or other registry)
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
-        
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v6
+
+    - name: Build and Push my_awesome_application
+      uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        context: ${{ github.workspace }} # Specifies the build context as the workspace
-        file: ${{ github.workspace }}/Dockerfile # Path to your Dockerfile
-        push: true # Set to true to push to a registry
-        tags: ${{ secrets.DOCKER_USERNAME }}/testgithubactions:latest
-        platforms: windows/amd64
+        image: my_awesome_microservice
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        platform: windows/amd64
+        tags: development-latest
+    
+        
+    #- name: Build and push Docker image
+    #  uses: docker/build-push-action@v6
+    #  with:
+    #    context: ${{ github.workspace }} # Specifies the build context as the workspace
+    #    file: ${{ github.workspace }}/Dockerfile # Path to your Dockerfile
+    #    push: true # Set to true to push to a registry
+     #   tags: ${{ secrets.DOCKER_USERNAME }}/testgithubactions:latest
+    #    platforms: windows/amd64
 
         # - name: Build and Push
     #   shell: powershell
