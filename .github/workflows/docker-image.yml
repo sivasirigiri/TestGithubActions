@@ -73,7 +73,7 @@ jobs:
     - name: Build and Push
       shell: powershell
       env:
-         REG_USER_NAME: ${{ secrets.DOCKERHUB_USERNAME }} # Assign the secret to an environment variable
+         REG_USER_NAME: ${{ secrets.DOCKER_USERNAME }} # Assign the secret to an environment variable
       run: |
            Write-Host "Registry user name: $env:REG_USER_NAME"
            $imageName = "${{ secrets.DOCKERHUB_USERNAME }}/testgithubactions:latest"
