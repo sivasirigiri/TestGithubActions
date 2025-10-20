@@ -83,12 +83,17 @@ jobs:
       shell: powershell
       env:
          REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
+         MY_USERNAME: ${{ github.actor }}
+         MY_PASSWORD: ${{ secrets.REGISTY_PAT }}
       run: |
+           $username = $env:MY_USERNAME
+           $password = $env:MY_PASSWORD
            Write-Host "Registry user name: $env:REG_USER_NAME"
            $imageName = "$env:REG_USER_NAME/testgithubactions:latest"
            Write-Host "Building Docker image: $imageName"
            docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
            Write-Host "Pushing Docker image: $imageName"
+           docker login ghcr.io -u $username -p $password
            docker push $imageName
 
     
