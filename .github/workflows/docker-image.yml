@@ -85,7 +85,7 @@ jobs:
          REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
       run: |
            Write-Host "Registry user name: $env:REG_USER_NAME"
-           $imageName = "${{ secrets.DOCKER_USERNAME }}/testgithubactions:latest"
+           $imageName = "$env:REG_USER_NAME/testgithubactions:latest"
            Write-Host "Building Docker image: $imageName"
            docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
            Write-Host "Pushing Docker image: $imageName"
