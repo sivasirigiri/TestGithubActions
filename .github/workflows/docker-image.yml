@@ -85,11 +85,12 @@ jobs:
          REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
          MY_USERNAME: ${{ github.actor }}
          MY_PASSWORD: ${{ secrets.REGISTY_PAT }}
-         REP_NAME: ${{github.repository }}
+         REP_NAME: $GITHUB_REPOSITORY
       run: |
            $username = $env:MY_USERNAME
            $password = $env:MY_PASSWORD
            Write-Host "Registry user name: $env:REG_USER_NAME"
+           Write-Host "Repository name: $env:REP_NAME"
            $imageName = "ghcr.io/$env:REG_USER_NAME/$env:REP_NAME:latest"
            Write-Host "Building Docker image: $imageName"
            Write-Host "Github Workspace: ${{ github.workspace }}"
