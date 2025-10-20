@@ -68,15 +68,27 @@ jobs:
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=This is a test app to validat github acitons
 
-    - name: Build and push
-      uses: docker/build-push-action@v6
-      with:
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            APP_WKSPC=$${{ github.workspace }}
-          context: . # Or specify a different build context path
-          file: ./Dockerfile # Specify the path to your Dockerfile
+    #- name: Build and push
+    #  uses: docker/build-push-action@v6
+    #  with:
+     #     push: ${{ github.event_name != 'pull_request' }}
+     #     tags: ${{ steps.meta.outputs.tags }}
+    #      labels: ${{ steps.meta.outputs.labels }}
+    #      build-args: |
+    #        APP_WKSPC=$${{ github.workspace }}
+     #     context: . # Or specify a different build context path
+     #     file: ./Dockerfile # Specify the path to your Dockerfile
+
+    - name: Build and Push
+      shell: powershell
+      env:
+         REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
+      run: |
+           Write-Host "Registry user name: $env:REG_USER_NAME"
+           $imageName = "${{ secrets.DOCKER_USERNAME }}/testgithubactions:latest"
+           Write-Host "Building Docker image: $imageName"
+           docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
+           Write-Host "Pushing Docker image: $imageName"
+           docker push $imageName
 
     
