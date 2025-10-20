@@ -7,10 +7,9 @@ on:
     branches: [ "master" ]
 
 jobs:
-
   build-and-push:
-
     runs-on: windows-latest
+    
     permissions:
       contents: read
       packages: write # Required to push images to GHCR
@@ -54,8 +53,6 @@ jobs:
       uses: docker/metadata-action@v5
       with:
           images: |
-            #your-dockerhub-username/your-app
-            #ghcr.io/your-github-username/your-app
             ghcr.io/${{ github.repository }}
           tags: |
             type=schedule
@@ -66,18 +63,7 @@ jobs:
             type=semver,pattern={{major}}
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
-            org.opencontainers.image.description=This is a test app to validat github acitons
-
-    #- name: Build and push
-    #  uses: docker/build-push-action@v6
-    #  with:
-     #     push: ${{ github.event_name != 'pull_request' }}
-     #     tags: ${{ steps.meta.outputs.tags }}
-    #      labels: ${{ steps.meta.outputs.labels }}
-    #      build-args: |
-    #        APP_WKSPC=$${{ github.workspace }}
-     #     context: . # Or specify a different build context path
-     #     file: ./Dockerfile # Specify the path to your Dockerfile
+            org.opencontainers.image.description=This is a test app to validate github acitons
 
     - name: Build and Push
       shell: powershell
@@ -85,7 +71,7 @@ jobs:
          REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
          MY_USERNAME: ${{ github.actor }}
          MY_PASSWORD: ${{ secrets.REGISTY_PAT }}
-         REP_NAME: "testgithubactions"
+         REP_NAME: testgithubactions
       run: |
            $username = $env:MY_USERNAME
            $password = $env:MY_PASSWORD
