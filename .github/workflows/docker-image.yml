@@ -89,11 +89,11 @@ jobs:
            $username = $env:MY_USERNAME
            $password = $env:MY_PASSWORD
            Write-Host "Registry user name: $env:REG_USER_NAME"
-           $imageName = "$env:REG_USER_NAME/testgithubactions:latest"
+           $imageName = "ghcr.io/$env:REG_USER_NAME/{{github.event.repository.name}}:latest"
            Write-Host "Building Docker image: $imageName"
-           docker build -t ghcr.io/$imageName -f ${{ github.workspace }}/Dockerfile .
+           docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
            Write-Host "Pushing Docker image: $imageName"
-           docker login ghcr.io -u $username -p $password
+           #docker login ghcr.io -u $username -p $password
            docker push ghcr.io/$imageName
 
     
