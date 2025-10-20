@@ -85,12 +85,14 @@ jobs:
          REG_USER_NAME: ${{ github.actor }}  # Assign the secret to an environment variable
          MY_USERNAME: ${{ github.actor }}
          MY_PASSWORD: ${{ secrets.REGISTY_PAT }}
+         REP_NAME: ${{github.repository }}
       run: |
            $username = $env:MY_USERNAME
            $password = $env:MY_PASSWORD
            Write-Host "Registry user name: $env:REG_USER_NAME"
-           $imageName = "ghcr.io/$env:REG_USER_NAME/{{github.event.repository.name}}:latest"
+           $imageName = "ghcr.io/$env:REG_USER_NAME/$env:REP_NAME:latest"
            Write-Host "Building Docker image: $imageName"
+           Write-Host "Github Workspace: ${{ github.workspace }}"
            docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
            Write-Host "Pushing Docker image: $imageName"
            #docker login ghcr.io -u $username -p $password
