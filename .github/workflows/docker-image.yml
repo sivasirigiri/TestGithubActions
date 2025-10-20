@@ -91,7 +91,7 @@ jobs:
            Write-Host "Registry user name: $env:REG_USER_NAME"
            $imageName = "$env:REG_USER_NAME/testgithubactions:latest"
            Write-Host "Building Docker image: $imageName"
-           docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
+           docker build -t ghcr.io/$imageName -f ${{ github.workspace }}/Dockerfile .
            Write-Host "Pushing Docker image: $imageName"
            docker login ghcr.io -u $username -p $password
            docker push ghcr.io/$imageName
