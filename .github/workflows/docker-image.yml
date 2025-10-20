@@ -96,6 +96,6 @@ jobs:
            docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
            Write-Host "Pushing Docker image: $imageName"
            #docker login ghcr.io -u $username -p $password
-           docker push ghcr.io/$imageName
+           docker push $imageName
 
     
