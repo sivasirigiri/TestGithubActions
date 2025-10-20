@@ -39,8 +39,8 @@ jobs:
         name: web-app-release
         path: bin\app.publish\
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    #- name: Set up Docker Buildx
+    #  uses: docker/setup-buildx-action@v3
       #with:
         #platforms: windows/amd64
 
@@ -48,17 +48,7 @@ jobs:
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }} 
-
-    - name: Build and Push my_awesome_application
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: my_awesome_microservice
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-        platform: windows/amd64
-        tags: development-latest
+        password: ${{ secrets.DOCKER_PASSWORD }}
     
         
     #- name: Build and push Docker image
@@ -80,11 +70,14 @@ jobs:
        # docker build --build-arg GITHUB_WKSPC=${{ github.workspace }} -t testgithubactions:latest -f ${{ github.workspace }}/Dockerfile .
        # docker push testgithubactions:latest
 
-
-      # run: |
-      #     Write-Host "Registry user name: $($env:REG_USER_NAME)"
-      #     $imageName = "${{ secrets.DOCKERHUB_USERNAME }}/testgithubactions:latest"
-      #     Write-Host "Building Docker image: $imageName"
-      #     docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
-      #     Write-Host "Pushing Docker image: $imageName"
-      #     docker push $imageName
+    - name: Build and Push
+      shell: powershell
+      env:
+         REG_USER_NAME: ${{ secrets.DOCKERHUB_USERNAME }} # Assign the secret to an environment variable
+      run: |
+           Write-Host "Registry user name: ${{env:REG_USER_NAME}}"
+           $imageName = "${{ secrets.DOCKERHUB_USERNAME }}/testgithubactions:latest"
+           Write-Host "Building Docker image: $imageName"
+           docker build -t $imageName -f ${{ github.workspace }}/Dockerfile .
+           Write-Host "Pushing Docker image: $imageName"
+           docker push $imageName
