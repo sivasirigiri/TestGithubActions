@@ -5,11 +5,4 @@
 FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2022
 ARG source
 WORKDIR /inetpub/wwwroot
-
-# Use ARG to define a build argument
-ARG GITHUB_WORKSPACE
-
-# Set an environment variable within the container (optional, but often useful)
-ENV GITHUB_WORKSPACE=$GITHUB_WKSPC
-
-COPY bin/app.publish/ .
+COPY bin/app.publish .
